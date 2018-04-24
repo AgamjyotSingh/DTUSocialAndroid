@@ -1,12 +1,15 @@
 package mank.dtusocialtodo;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +20,7 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyViewHolder> {
 
-    private List<TodoList> list = new ArrayList<>();
+    static List<TodoList> list = new ArrayList<>();
 
     RecyclerAdapter(List<TodoList> list){
         this.list = list;
@@ -26,17 +29,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_view,parent,false);
+
+
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
 
         holder.message.setText(list.get(position).getMessage());
 
-        holder.message.setChecked(list.get(position).isDone());
+        if(list.get(position).isDone() == true) {
+            holder.message.setChecked(list.get(position).isDone());
+            holder.message.setBackgroundColor(Color.parseColor("#00FF80"));
+        }
 
         System.out.println("STATUS:" + list.get(position).isDone());
+
 
     }
 
@@ -50,10 +59,15 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         CheckBox message;
 
+        RelativeLayout relativeLayout;
+
         public MyViewHolder(View itemView) {
             super(itemView);
 
             message = itemView.findViewById(R.id.message);
+
+            relativeLayout = itemView.findViewById(R.id.relativeLayout);
+
 
         }
     }

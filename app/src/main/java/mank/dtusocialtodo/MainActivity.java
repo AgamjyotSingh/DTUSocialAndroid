@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 
 
 import com.android.volley.Request;
@@ -24,10 +26,12 @@ import org.json.JSONArray;
 import java.util.Arrays;
 import java.util.List;
 
+import static mank.dtusocialtodo.RecyclerAdapter.list;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView recyclerView;
+    static RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerAdapter adapter;
 
@@ -42,15 +46,22 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
+        Button button = findViewById(R.id.delete);
 
 
         this.setTitle("My Todo");
 
         String URL = "http://130.225.170.246:8080/DTUSocial-1.0/todos";
 
-        final String todo = "";
 
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                list.remove(recyclerView.getChildLayoutPosition(view));
+
+            }
+        });
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
