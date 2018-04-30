@@ -24,6 +24,8 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
@@ -47,15 +49,18 @@ public class LoginActivity extends AppCompatActivity {
 
     String username;
     String password;
+    String token;
 
-
-    private String URL = "http://10.0.2.2:8080/DTUSocial/login/";
+    private String URL = "http://10.0.2.2:8080/DTUSocial/login";
     AlertDialog.Builder builder;
+
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        URL = URL.replaceAll(" ", "%20");
 
         builder = new AlertDialog.Builder(this);
 
@@ -92,9 +97,6 @@ public class LoginActivity extends AppCompatActivity {
 
     public void displayText(String message){
 
-
-
-
         builder.setMessage(message);
         builder.setPositiveButton("Ok baby!", new DialogInterface.OnClickListener() {
             @Override
@@ -113,16 +115,25 @@ public class LoginActivity extends AppCompatActivity {
 
     public void postResponse() {
 
+        Map<String, String> params = new HashMap<String, String>();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+        params.put("username", username);
+        params.put("password", password);
+
+        StringRequest jsonObjectRequest = new StringRequest(
                 Request.Method.POST,
                 URL,
-                null,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        Log.e("REST RESPONSE: ", response.toString());
+                    public void onResponse(String response) {
+                        Log.e("REST RESPONSE ", response);
+
+
+
+
+
                     }
+
                 },
                 new Response.ErrorListener() {
                     @Override
@@ -130,42 +141,22 @@ public class LoginActivity extends AppCompatActivity {
 
                         Log.e("REST RESPONSE: ", error.toString());
 
-                        NetworkResponse response = error.networkResponse;
-                        if (error instanceof ServerError && response != null) {
-                            try {
-                                String res = new String(response.data,
-                                        HttpHeaderParser.parseCharset(response.headers, "utf-8"));
-                                // Now you can use any deserializer to make sense of data
-                                JSONObject obj = new JSONObject(res);
-                            } catch (UnsupportedEncodingException e1) {
-                                // Couldn't properly decode data to string
-                                e1.printStackTrace();
-                            } catch (JSONException e2) {
-                                // returned data is not JSONObject?
-                                e2.printStackTrace();
-                            }
-
                         }
-                    }
                 }
         ) {
 
-
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError{
-                Map<String, String> headers = new HashMap<String, String>();
-                headers.put("Content-Type", "application/json; charset=utf-8");
-                return headers;
+            public byte[] getBody() throws AuthFailureError {
+                HashMap<String, String> params2 = new HashMap<String, String>();
+                params2.put("username", username);
+                params2.put("password", password);
+                return new JSONObject(params2).toString().getBytes();
             }
 
             @Override
-            public Map<String, String> getParams(){
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("username", username);
-                params.put("password", password);
-                return params;
+            public String getBodyContentType() {
+                return "application/json";
             }
-
         };
 
 
