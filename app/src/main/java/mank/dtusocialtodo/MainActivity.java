@@ -1,7 +1,5 @@
 package mank.dtusocialtodo;
 
-
-
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,19 +26,19 @@ import java.util.List;
 
 import static mank.dtusocialtodo.RecyclerAdapter.list;
 
-
 public class MainActivity extends AppCompatActivity {
 
     static RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerAdapter adapter;
+    String URL = "http://130.225.170.246:8080/DTUSocial-1.0/todos";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView =  findViewById(R.id.recyclerView);
+        recyclerView = findViewById(R.id.recyclerView);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -48,11 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button button = findViewById(R.id.delete);
 
-
         this.setTitle("My Todo");
-
-        String URL = "http://130.225.170.246:8080/DTUSocial-1.0/todos";
-
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,8 +57,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        getResponse();
+    }
 
+
+    public void getResponse() {
         JsonArrayRequest arrayRequest = new JsonArrayRequest(
                 Request.Method.GET,
                 URL,
@@ -73,12 +70,12 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        Log.e("Rest Response: ",response.toString());
+                        Log.e("Rest Response: ", response.toString());
                         GsonBuilder gsonBuilder = new GsonBuilder();
 
                         Gson gson = gsonBuilder.create();
 
-                        List<TodoList> list = Arrays.asList(gson.fromJson(response.toString(),TodoList[].class));
+                        List<TodoList> list = Arrays.asList(gson.fromJson(response.toString(), TodoList[].class));
 
                         adapter = new RecyclerAdapter(list);
                         recyclerView.setAdapter(adapter);
@@ -89,18 +86,14 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Log.e("Rest Response: ",error.toString());
+                        Log.e("Rest Response: ", error.toString());
 
                     }
                 }
         );
 
-        requestQueue.add(arrayRequest);
+        AppSingleton.getAppInstance(this).addToRequestQueue(arrayRequest);
     }
-
-
-
-
 
 
 }
