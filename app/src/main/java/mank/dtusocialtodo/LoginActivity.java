@@ -45,9 +45,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText edtUserName, edtPassWord;
     private Button login;
 
-    String username = "s165155";
-    String password = "123456";
-
+    String username;
+    String password;
 
 
     private String URL = "http://10.0.2.2:8080/DTUSocial/login/";
@@ -69,6 +68,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                username = edtUserName.getText().toString();
+                password = edtPassWord.getText().toString();
+
 
                 if (username.equals("") || password.equals("")){
 
@@ -89,6 +91,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void displayText(String message){
+
 
 
 
