@@ -2,6 +2,7 @@ package mank.dtusocialtodo;
 
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.media.MediaCas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -128,8 +129,15 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.e("REST RESPONSE ", response);
 
+                        token = response.replaceAll("Bearer ", "%20");
 
+                        System.out.println(token);
 
+                        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+
+                        i.putExtra("token", token);
+
+                        startActivity(i);
 
 
                     }
