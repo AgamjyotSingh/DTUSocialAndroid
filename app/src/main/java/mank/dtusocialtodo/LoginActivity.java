@@ -36,7 +36,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -50,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
     String username;
     String password;
-    String token;
+
 
     private String URL = "http://10.0.2.2:8080/DTUSocial/login";
     AlertDialog.Builder builder;
@@ -129,16 +131,13 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(String response) {
                         Log.e("REST RESPONSE ", response);
 
-                        token = response.replaceAll("Bearer ", "%20");
-
-                        System.out.println(token);
+                        System.out.println(response);
 
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
 
-                        i.putExtra("token", token);
+                        i.putExtra("token", response);
 
                         startActivity(i);
-
 
                     }
 
