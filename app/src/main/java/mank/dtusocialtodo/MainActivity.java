@@ -36,7 +36,10 @@ public class MainActivity extends AppCompatActivity {
     static RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecyclerAdapter adapter;
-    String URL = "http://10.0.2.2:8080/DTUSocial/users/usertodo";
+
+
+
+    String URL = "http://10.0.2.2:8080/DTUSocial/users/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,27 +52,23 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setHasFixedSize(true);
 
-        Button button = findViewById(R.id.delete);
-
         this.setTitle("My Todo");
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                list.remove(recyclerView.getChildLayoutPosition(view));
 
-            }
-        });
 
         getResponse();
     }
 
 
     public void getResponse() {
+
+        Intent i = getIntent();
+
         JsonArrayRequest arrayRequest = new JsonArrayRequest(
+
                 Request.Method.GET,
-                URL,
+                URL + i.getStringExtra("username") +"/todos",
                 null,
                 new Response.Listener<JSONArray>() {
                     @Override

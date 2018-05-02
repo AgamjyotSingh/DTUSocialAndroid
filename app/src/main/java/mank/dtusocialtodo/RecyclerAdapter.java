@@ -59,14 +59,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.MyView
 
         CheckBox message;
 
-        RelativeLayout relativeLayout;
 
         public MyViewHolder(View itemView) {
             super(itemView);
 
             message = itemView.findViewById(R.id.message);
-
-            relativeLayout = itemView.findViewById(R.id.relativeLayout);
 
 
         }

@@ -83,7 +83,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (username.equals("") || password.equals("")){
 
                     builder.setTitle("Oops");
-                    displayText("Incorrect username or password, please try again!");
+                    displayText("Du skal indtaste brugernavn og adgangskode");
 
                 }
                 else{
@@ -118,6 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void postResponse() {
 
+
         Map<String, String> params = new HashMap<String, String>();
 
         params.put("username", username);
@@ -136,6 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                         Intent i = new Intent(LoginActivity.this, MainActivity.class);
 
                         i.putExtra("token", response);
+                        i.putExtra("username", username);
 
                         startActivity(i);
 
@@ -147,6 +149,10 @@ public class LoginActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 
                         Log.e("REST RESPONSE: ", error.toString());
+
+                        builder.setTitle("Oops!");
+                        displayText("Forkert brugernavn eller adgangskode");
+
 
                         }
                 }
