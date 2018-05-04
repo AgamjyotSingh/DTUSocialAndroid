@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    String URL = "http://10.0.2.2:8080/DTUSocial/users/";
+    String URL = "http://130.225.170.246:8080/DTUSocial-1.0/users/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

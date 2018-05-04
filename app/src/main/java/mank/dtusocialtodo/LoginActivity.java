@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
     String password;
 
 
-    private String URL = "http://10.0.2.2:8080/DTUSocial/login";
+    private String URL = "http://130.225.170.246:8080/DTUSocial-1.0/login";
     AlertDialog.Builder builder;
 
 
