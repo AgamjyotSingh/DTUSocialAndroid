@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
     public void displayText(String message){
 
         builder.setMessage(message);
-        builder.setPositiveButton("Ok baby!", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Ok!", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 edtUserName.setText("");
@@ -118,13 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void postResponse() {
 
-
-        Map<String, String> params = new HashMap<String, String>();
-
-        params.put("username", username);
-        params.put("password", password);
-
-        StringRequest jsonObjectRequest = new StringRequest(
+        StringRequest stringRequest = new StringRequest(
                 Request.Method.POST,
                 URL,
                 new Response.Listener<String>() {
@@ -173,7 +167,7 @@ public class LoginActivity extends AppCompatActivity {
         };
 
 
-        AppSingleton.getAppInstance(this).addToRequestQueue(jsonObjectRequest);
+        AppSingleton.getAppInstance(this).addToRequestQueue(stringRequest);
 
     }
 

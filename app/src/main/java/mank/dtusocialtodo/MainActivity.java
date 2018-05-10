@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
     RecyclerAdapter adapter;
 
 
-
     String URL = "http://130.225.170.246:8080/DTUSocial-1.0/users/";
 
     @Override
@@ -53,9 +52,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
 
         this.setTitle("My Todo");
-
-
-
 
         getResponse();
     }
